@@ -33,13 +33,13 @@ add_executable(base_node
   lib/serial/unix.cc 
   lib/mw/stella.cpp
 )
-ament_target_dependencies(${PROJECT_NAME}_node
+ament_target_dependencies(base_node
   rclcpp
   geometry_msgs
   nav_msgs
 )
 
-target_link_libraries(${PROJECT_NAME}_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/mw_motor_driver/MW_MotorDriver_aarch64.a)
+target_link_libraries(base_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/mw_motor_driver/MW_MotorDriver_aarch64.a)
 
 ################################################################################
 # Install
@@ -50,7 +50,7 @@ install(
 )
 
 install(TARGETS
-  ${PROJECT_NAME}_node
+  base_node
   DESTINATION lib/${PROJECT_NAME})
 
 ament_export_include_directories(include)
