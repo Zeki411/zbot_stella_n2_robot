@@ -26,7 +26,7 @@ include_directories(
 
 
 
-add_executable(${PROJECT_NAME}_node 
+add_executable(base_node 
   src/zbot_stella_n2_robot_base.cpp
   lib/serial/list_ports_linux.cc 
   lib/serial/serial.cc 
