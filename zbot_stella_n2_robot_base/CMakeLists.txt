@@ -17,14 +17,15 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(tf2_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2 REQUIRED)
 
 include_directories(
   "${PROJECT_SOURCE_DIR}/lib/serial"
   "${PROJECT_SOURCE_DIR}/lib/mw_motor_driver"
   "${PROJECT_SOURCE_DIR}/lib/mw"
 )
-
-
 
 add_executable(base_node 
   src/zbot_stella_n2_robot_base.cpp
@@ -34,9 +35,12 @@ add_executable(base_node
   lib/mw/stella.cpp
 )
 ament_target_dependencies(base_node
-  rclcpp
-  geometry_msgs
-  nav_msgs
+  "rclcpp"
+  "geometry_msgs"
+  "nav_msgs"
+  "tf2_msgs"
+  "tf2_ros"
+  "tf2"
 )
 
 target_link_libraries(base_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/mw_motor_driver/MW_MotorDriver_aarch64.a)
