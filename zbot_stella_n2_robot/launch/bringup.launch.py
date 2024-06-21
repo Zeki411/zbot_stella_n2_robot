@@ -96,6 +96,9 @@ def generate_launch_description():
             emulate_tty=True,
             parameters=[yd_params],
             namespace='/',
+            remappings=[
+                ('scan', 'front/scan')
+            ]
         )
     ])
 
