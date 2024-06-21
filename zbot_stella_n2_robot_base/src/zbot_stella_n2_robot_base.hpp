@@ -17,6 +17,10 @@ public:
     ~zbot_stella_n2_robot_base_node();
 
 private:
+    // ROS parameters
+    bool odom_publish_tf_;
+    std::string odom_frame_id_;
+    std::string odom_child_frame_id;
 
     // ROS timer
     rclcpp::TimerBase::SharedPtr serial_timer;
@@ -38,6 +42,7 @@ private:
 
     double delta_th=0.0,delta_s=0.0,delta_x=0.0,delta_y=0.0,x=0.0,y=0.0,th=0.0,delta_left = 0,delta_right = 0;
 
+    void ahrs_yaw_data_callback(const std_msgs::msg::Float64::SharedPtr msg);
     void command_velocity_callback(const geometry_msgs::msg::Twist::SharedPtr cmd_vel_msg);
     void serial_timer_callback();
     void update_odometry();

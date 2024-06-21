@@ -1,0 +1,5 @@
+mw_md_ros2_driver:
+  ros__parameters:
+    odom_publish_tf: false
+    odom_frame_id: "odom"
+    odom_child_frame_id: "base_footprint"

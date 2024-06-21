@@ -54,11 +54,16 @@ namespace ntrex
     this->declare_parameter<double>("angular_velocity_stddev", 0.0);
     this->declare_parameter<double>("magnetic_field_stddev", 0.0);
     this->declare_parameter<double>("orientation_stddev", 0.0);
+    this->declare_parameter<bool>("publish_tf", false);
+    this->declare_parameter<std::string>("frame_id", "imu_link");
   
     this->get_parameter("linear_acceleration_stddev", linear_acceleration_stddev_);
     this->get_parameter("angular_velocity_stddev", angular_velocity_stddev_);
     this->get_parameter("magnetic_field_stddev", magnetic_field_stddev_);
     this->get_parameter("orientation_stddev", orientation_stddev_);
+
+    this->get_parameter("publish_tf", publish_tf_);
+    this->get_parameter("frame_id", frame_id_);
   
     if (res)
     {
