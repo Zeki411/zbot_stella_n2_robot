@@ -49,7 +49,7 @@ target_link_libraries(base_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/mw_motor_driver/
 # Install
 ################################################################################
 install(
-  DIRECTORY launch
+  DIRECTORY 
   DESTINATION share/${PROJECT_NAME}/
 )
 
