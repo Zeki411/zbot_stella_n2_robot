@@ -115,6 +115,6 @@ def generate_launch_description():
 
     ld.add_action(zbot_stella_n2_bringup_group_action)
     ld.add_action(zbot_stella_n2_sensors_group_action)
-    # ld.add_action(robot_localization_launch)
+    ld.add_action(robot_localization_launch)
 
     return ld
