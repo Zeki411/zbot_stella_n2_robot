@@ -38,6 +38,7 @@ def generate_launch_description():
             output='screen',
             parameters=[mw_md_params],
             remappings=[
+                ('cmd_vel', 'zbot_stella_n2_velocity_controller/cmd_vel_unstamped'),
                 ('odom', 'mw_md/odom'),
             ]
         ),
@@ -114,6 +115,6 @@ def generate_launch_description():
 
     ld.add_action(zbot_stella_n2_bringup_group_action)
     ld.add_action(zbot_stella_n2_sensors_group_action)
-    ld.add_action(robot_localization_launch)
+    # ld.add_action(robot_localization_launch)
 
     return ld
