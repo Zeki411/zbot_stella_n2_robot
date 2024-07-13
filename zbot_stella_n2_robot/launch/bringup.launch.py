@@ -39,6 +39,8 @@ def generate_launch_description():
             parameters=[mw_md_params],
             remappings=[
                 ('odom', 'mw_md/odom'),
+                ('cmd_vel', 'zbot_stella_n2_velocity_controller/cmd_vel_unstamped')
+
             ]
         ),
 
