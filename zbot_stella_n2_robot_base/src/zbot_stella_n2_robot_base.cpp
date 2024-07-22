@@ -97,11 +97,13 @@ void zbot_stella_n2_robot_base_node::update_odometry() {
   odom.pose.pose.orientation.z = Quaternion.z();
   odom.pose.pose.orientation.w = Quaternion.w();
 
+  
+  rclcpp::Time time_now = this->now();
+
   if(odom_publish_tf_) {
     // Create and send the transform
-    geometry_msgs::msg::TransformStamped t;
-    rclcpp::Time time_now = this->now();
 
+    geometry_msgs::msg::TransformStamped t;
     t.header.stamp = time_now;
     t.header.frame_id = odom_frame_id_;
     t.child_frame_id = odom_child_frame_id;
@@ -121,6 +123,10 @@ void zbot_stella_n2_robot_base_node::update_odometry() {
   odom.pose.pose.position.x = x;
   odom.pose.pose.position.y = y;
   odom.pose.pose.position.z = 0.0;
+
+  // Calculate covariance for pose
+
+  // Calculate the linear and angular velocities
   odom.twist.twist.linear.x = goal_linear_velocity_;
   odom.twist.twist.angular.z = goal_angular_velocity_;
 

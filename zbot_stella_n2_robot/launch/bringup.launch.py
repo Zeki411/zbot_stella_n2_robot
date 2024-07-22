@@ -7,6 +7,7 @@ from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
+from launch.conditions import IfCondition
 import os
 
 
@@ -20,6 +21,22 @@ def generate_launch_description():
                                         'params', 'imu_filter.yaml')
     mw_md_params = os.path.join(get_package_share_directory('zbot_stella_n2_robot'),
                                     'params', 'mw_md.yaml')
+    
+
+    declare_use_lidar = DeclareLaunchArgument(
+        'use_lidar',
+        default_value='false',
+        description='Whether to use the lidar or not'
+    )
+
+    declare_use_rscam = DeclareLaunchArgument(
+        'use_rscam',
+        default_value='false',
+        description='Whether to use the rscam or not'
+    )
+
+    use_lidar = LaunchConfiguration('use_lidar')
+    use_rscam = LaunchConfiguration('use_rscam')
 
     zbot_stella_n2_bringup_group_action = GroupAction([
 
@@ -76,6 +93,23 @@ def generate_launch_description():
             ]
         ),
 
+        # Node(
+        #     package='umx_driver',
+        #     executable='um7_driver',
+        #     output='both',
+        #     parameters=[
+        #         {'port': '/dev/ttyUSB1'},
+        #         {'baud': 115200},
+        #         {'frame_id': 'imu_link'},
+        #     ],
+        #     remappings=[
+        #         ('/imu/data', '/um7_imu/data'),
+        #         ('/imu/mag', '/um7_imu/mag'),
+        #         ('/imu/rpy', '/um7_imu/rpy'),
+        #         ('/imu/temperature', '/um7_imu/temperature')
+        #     ]
+        # ),
+
         #IMU Filter
         Node(
             package='imu_filter_madgwick',
@@ -86,6 +120,9 @@ def generate_launch_description():
             remappings=[
                 ('imu/data_raw', 'mw_ahrs_imu/data'),
                 ('imu/mag', 'mw_ahrs_imu/mag')
+
+                # ('imu/data_raw', 'um7_imu/data'),
+                # ('imu/mag', 'um7_imu/mag')
             ]
         ),
 
@@ -99,7 +136,21 @@ def generate_launch_description():
             namespace='/',
             remappings=[
                 ('scan', 'front/scan')
-            ]
+            ],
+            condition=IfCondition(use_lidar)
+        ),
+
+        #RSCam
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(PathJoinSubstitution(
+                [FindPackageShare('realsense2_camera'), 'launch', 'rs_launch.py']
+            )),
+            launch_arguments={
+                'camera_name': 'rscam',
+                'camera_namespace': '',
+                'config_file': get_package_share_directory('zbot_stella_n2_robot') + '/params/rscam.yaml'
+            }.items(),
+            condition=IfCondition(use_rscam)
         )
     ])
 
@@ -112,7 +163,8 @@ def generate_launch_description():
     
 
     ld = LaunchDescription()
-
+    ld.add_action(declare_use_lidar)
+    ld.add_action(declare_use_rscam)
     ld.add_action(zbot_stella_n2_bringup_group_action)
     ld.add_action(zbot_stella_n2_sensors_group_action)
     ld.add_action(robot_localization_launch)
