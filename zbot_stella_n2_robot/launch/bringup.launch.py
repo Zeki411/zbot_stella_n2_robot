@@ -79,66 +79,66 @@ def generate_launch_description():
     zbot_stella_n2_sensors_group_action = GroupAction([
 
         #IMU
-        Node(
-            package='stella_ahrs',
-            executable='stella_ahrs_node',
-            name='stella_ahrs_node',
-            output='screen',
-            parameters=[mw_ahrs_params],
-            remappings=[
-                ('imu/data', 'mw_ahrs_imu/data'),
-                ('imu/data_raw', 'mw_ahrs_imu/data_raw'),
-                ('imu/mag', 'mw_ahrs_imu/mag'),
-                ('imu/yaw', 'mw_ahrs_imu/yaw'),
-            ]
-        ),
-
         # Node(
-        #     package='umx_driver',
-        #     executable='um7_driver',
-        #     output='both',
-        #     parameters=[
-        #         {'port': '/dev/ttyUSB1'},
-        #         {'baud': 115200},
-        #         {'frame_id': 'imu_link'},
-        #     ],
+        #     package='stella_ahrs',
+        #     executable='stella_ahrs_node',
+        #     name='stella_ahrs_node',
+        #     output='screen',
+        #     parameters=[mw_ahrs_params],
         #     remappings=[
-        #         ('/imu/data', '/um7_imu/data'),
-        #         ('/imu/mag', '/um7_imu/mag'),
-        #         ('/imu/rpy', '/um7_imu/rpy'),
-        #         ('/imu/temperature', '/um7_imu/temperature')
+        #         ('imu/data', 'mw_ahrs_imu/data'),
+        #         ('imu/data_raw', 'mw_ahrs_imu/data_raw'),
+        #         ('imu/mag', 'mw_ahrs_imu/mag'),
+        #         ('imu/yaw', 'mw_ahrs_imu/yaw'),
         #     ]
         # ),
 
-        #IMU Filter
-        Node(
-            package='imu_filter_madgwick',
-            executable='imu_filter_madgwick_node',
-            name='imu_filter_node',
-            output='screen',
-            parameters=[imu_filter_params],
-            remappings=[
-                ('imu/data_raw', 'mw_ahrs_imu/data'),
-                ('imu/mag', 'mw_ahrs_imu/mag')
+        # # Node(
+        # #     package='umx_driver',
+        # #     executable='um7_driver',
+        # #     output='both',
+        # #     parameters=[
+        # #         {'port': '/dev/ttyUSB1'},
+        # #         {'baud': 115200},
+        # #         {'frame_id': 'imu_link'},
+        # #     ],
+        # #     remappings=[
+        # #         ('/imu/data', '/um7_imu/data'),
+        # #         ('/imu/mag', '/um7_imu/mag'),
+        # #         ('/imu/rpy', '/um7_imu/rpy'),
+        # #         ('/imu/temperature', '/um7_imu/temperature')
+        # #     ]
+        # # ),
 
-                # ('imu/data_raw', 'um7_imu/data'),
-                # ('imu/mag', 'um7_imu/mag')
-            ]
-        ),
+        # #IMU Filter
+        # Node(
+        #     package='imu_filter_madgwick',
+        #     executable='imu_filter_madgwick_node',
+        #     name='imu_filter_node',
+        #     output='screen',
+        #     parameters=[imu_filter_params],
+        #     remappings=[
+        #         ('imu/data_raw', 'mw_ahrs_imu/data'),
+        #         ('imu/mag', 'mw_ahrs_imu/mag')
 
-        #YDLidar
-        Node(package='ydlidar',
-            executable='ydlidar_node',
-            name='ydlidar_node',
-            output='screen',
-            emulate_tty=True,
-            parameters=[yd_params],
-            namespace='/',
-            remappings=[
-                ('scan', 'front/scan')
-            ],
-            condition=IfCondition(use_lidar)
-        ),
+        #         # ('imu/data_raw', 'um7_imu/data'),
+        #         # ('imu/mag', 'um7_imu/mag')
+        #     ]
+        # ),
+
+        # #YDLidar
+        # Node(package='ydlidar',
+        #     executable='ydlidar_node',
+        #     name='ydlidar_node',
+        #     output='screen',
+        #     emulate_tty=True,
+        #     parameters=[yd_params],
+        #     namespace='/',
+        #     remappings=[
+        #         ('scan', 'front/scan')
+        #     ],
+        #     condition=IfCondition(use_lidar)
+        # ),
 
         #RSCam
         IncludeLaunchDescription(
@@ -146,8 +146,8 @@ def generate_launch_description():
                 [FindPackageShare('realsense2_camera'), 'launch', 'rs_launch.py']
             )),
             launch_arguments={
-                'camera_name': 'rscam',
-                'camera_namespace': '',
+                # 'camera_name': 'rscam',
+                # 'camera_namespace': '',
                 'config_file': get_package_share_directory('zbot_stella_n2_robot') + '/params/rscam.yaml'
             }.items(),
             condition=IfCondition(use_rscam)
@@ -165,8 +165,8 @@ def generate_launch_description():
     ld = LaunchDescription()
     ld.add_action(declare_use_lidar)
     ld.add_action(declare_use_rscam)
-    ld.add_action(zbot_stella_n2_bringup_group_action)
+    # ld.add_action(zbot_stella_n2_bringup_group_action)
     ld.add_action(zbot_stella_n2_sensors_group_action)
-    ld.add_action(robot_localization_launch)
+    # ld.add_action(robot_localization_launch)
 
     return ld
