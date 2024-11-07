@@ -71,11 +71,10 @@ void zbot_stella_n2_robot_base_node::update_odometry() {
   // Calculate the distance each wheel has traveled
   delta_left = Limit_i((MyMotorCommandReadValue.position[channel_1] - left_encoder_prev), 0, 15000) * pulse2meter();
   delta_right = Limit_i((MyMotorCommandReadValue.position[channel_2] - right_encoder_prev), 0, 15000) * pulse2meter();
-  
 
   // Calculate the change in the robot's position and orientation
   delta_s  = (delta_right + delta_left) / 2.0;
-  delta_th += (delta_right - delta_left) / Differential_MobileRobot.axle_length;
+  delta_th += -1.0 * (delta_right - delta_left) / Differential_MobileRobot.axle_length; // reverse bugs fixed by -1.0
 
   // Update the robot's position
   delta_x  = delta_s * cos(delta_th);

@@ -86,19 +86,19 @@ def generate_launch_description():
     zbot_stella_n2_sensors_group_action = GroupAction([
 
         # IMU
-        Node(
-            package='stella_ahrs',
-            executable='stella_ahrs_node',
-            name='stella_ahrs_node',
-            output='screen',
-            parameters=[mw_ahrs_params],
-            remappings=[
-                ('imu/data', 'mw_ahrs_imu/data'),
-                ('imu/data_raw', 'mw_ahrs_imu/data_raw'),
-                ('imu/mag', 'mw_ahrs_imu/mag'),
-                ('imu/yaw', 'mw_ahrs_imu/yaw'),
-            ]
-        ),
+        # Node(
+        #     package='stella_ahrs',
+        #     executable='stella_ahrs_node',
+        #     name='stella_ahrs_node',
+        #     output='screen',
+        #     parameters=[mw_ahrs_params],
+        #     remappings=[
+        #         ('imu/data', 'mw_ahrs_imu/data'),
+        #         ('imu/data_raw', 'mw_ahrs_imu/data_raw'),
+        #         ('imu/mag', 'mw_ahrs_imu/mag'),
+        #         ('imu/yaw', 'mw_ahrs_imu/yaw'),
+        #     ]
+        # ),
 
         # Node(
         #     package='umx_driver',
@@ -118,20 +118,20 @@ def generate_launch_description():
         # ),
 
         #IMU Filter
-        Node(
-            package='imu_filter_madgwick',
-            executable='imu_filter_madgwick_node',
-            name='imu_filter_node',
-            output='screen',
-            parameters=[imu_filter_params],
-            remappings=[
-                ('imu/data_raw', 'mw_ahrs_imu/data'),
-                ('imu/mag', 'mw_ahrs_imu/mag')
+        # Node(
+        #     package='imu_filter_madgwick',
+        #     executable='imu_filter_madgwick_node',
+        #     name='imu_filter_node',
+        #     output='screen',
+        #     parameters=[imu_filter_params],
+        #     remappings=[
+        #         ('imu/data_raw', 'mw_ahrs_imu/data'),
+        #         ('imu/mag', 'mw_ahrs_imu/mag')
 
-                # ('imu/data_raw', 'um7_imu/data'),
-                # ('imu/mag', 'um7_imu/mag')
-            ]
-        ),
+        #         # ('imu/data_raw', 'um7_imu/data'),
+        #         # ('imu/mag', 'um7_imu/mag')
+        #     ]
+        # ),
 
         #YDLidar
         Node(package='ydlidar',
