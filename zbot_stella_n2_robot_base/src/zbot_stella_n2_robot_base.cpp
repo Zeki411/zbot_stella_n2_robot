@@ -74,7 +74,7 @@ void zbot_stella_n2_robot_base_node::update_odometry() {
 
   // Calculate the change in the robot's position and orientation
   delta_s  = (delta_right + delta_left) / 2.0;
-  delta_th += -1.0 * (delta_right - delta_left) / Differential_MobileRobot.axle_length; // reverse bugs fixed by -1.0
+  delta_th += -1.0 * (delta_right - delta_left) / Differential_MobileRobot.axle_length; // reverse bugs fixed by multiplying -1.0 here
 
   // Update the robot's position
   delta_x  = delta_s * cos(delta_th);
@@ -127,7 +127,7 @@ void zbot_stella_n2_robot_base_node::update_odometry() {
 
   // Calculate the linear and angular velocities
   odom.twist.twist.linear.x = goal_linear_velocity_;
-  odom.twist.twist.angular.z = goal_angular_velocity_;
+  odom.twist.twist.angular.z = goal_angular_velocity_ * -1.0; // reverse bugs fixed by multiplying -1.0 to angular velocity as well
 
   // Publish the odometry message
   odom_pub_->publish(odom);
